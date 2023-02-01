@@ -98,24 +98,28 @@ class MyGame extends FlameGame with HasGameRef, HasTappables {
       ParallaxImageData('parallax_forest/forest_back.png'),
       ParallaxImageData('parallax_forest/forest_middle.png'),
       ParallaxImageData('parallax_forest/forest_front.png'),
+      // ParallaxImageData('parallax_forest/grass_foreground.png'),
+    ];
+    List<ParallaxData> groundParallaxImages = [
+      ParallaxImageData('parallax_forest/grass_foreground.png'),
       ParallaxImageData('parallax_forest/grass_foreground.png'),
     ];
     ParallaxComponent backgroundParallax = await ParallaxComponent.load(
       forestParallaxImages,
       repeat: ImageRepeat.repeatX,
-      baseVelocity: Vector2(02, 20),
+      baseVelocity: Vector2(-2, 0),
       size: size,
       velocityMultiplierDelta: Vector2(-2.5, 0),
     );
-    // await loadParallaxLayer( ParallaxImageData('parallax_forest/forest_front.png'),);
-
-    await loadParallaxComponent(
-      forestParallaxImages,
-      repeat: ImageRepeat.repeatX,
-      baseVelocity: Vector2(0, -50),
-      velocityMultiplierDelta: Vector2(0, 1.5),
-    );
     add(backgroundParallax);
+    ParallaxComponent groundParallax = await ParallaxComponent.load(
+      groundParallaxImages,
+      repeat: ImageRepeat.repeatX,
+      baseVelocity: Vector2(3, 20),
+      size: size,
+      velocityMultiplierDelta: Vector2(-3.5, 0),
+    );
+    add(groundParallax);
 
 //character
     boy
@@ -200,7 +204,7 @@ Future<void> _updateJumpAxisY() async{
     print('boyJumpAnimation.position.y ${boyJumpAnimation.position.y}');
     // -- upward
     // ++ downward
-    if(boyJumpAnimation.position.y >= (_yAxisHeight - 50)) { // if down
+    if(boyJumpAnimation.position.y >= (_yAxisHeight + 50)) { // if down
       boyJumpAnimation.position.y -= 1.5;
     }else if(boyJumpAnimation.position.y == (_yAxisHeight + 50)){ // if up
       boyJumpAnimation.position.y += 1.5;
