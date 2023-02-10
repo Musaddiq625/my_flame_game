@@ -19,10 +19,10 @@ class MyGame extends FlameGame with HasGameRef, HasTappables {
   final arrowSize = Vector2(50, 100);
   final buttonSize = Vector2(100, 80);
 
-  // final leftArrowPosition = Vector2(20, 250);
-  // final rightArrowPosition = Vector2(740, 250);
+  final leftArrowPosition = Vector2(20, 250);
+  final rightArrowPosition = Vector2(740, 250);
   // final jumpButtonPosition = Vector2(350, 250); //center
-  final jumpButtonPosition = Vector2(640, _yAxisHeight);
+  // final jumpButtonPosition = Vector2(640, _yAxisHeight);
   final boyRunningVSize = Vector2(112.0, 130.0);
   final boyJumpVSize = Vector2(90.0, 120.0);
 
@@ -33,55 +33,55 @@ class MyGame extends FlameGame with HasGameRef, HasTappables {
     add(background);
   }
 
-  // _onLeftArrowPressed() {
-  //   if (direction != 'left') {
-  //     flipCharacter();
-  //   }
-  // }
-  //
-  // _onRightArrowPressed() {
-  //   if (direction != 'right') {
-  //     flipCharacter();
-  //   }
-  // }
-
-  _onJumpButtonPressed() async {
-    // var spriteSheet = await images.load(AssetConstants.boyJump);
-    // SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-    //   amount: 6,
-    //   stepTime: 0.1,
-    //   textureSize: boyJumpVSize,
-    // );
-    // boyAnimation =
-    // SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-    //   ..x = 250
-    //   ..y = 350
-    //   ..size = spriteSize;
-    // boyAnimation
-    var spriteSheet = await images.load(AssetConstants.boyJump);
-    boy
-      ..sprite = await loadSprite(AssetConstants.boyJump)
-      ..size = boyJumpVSize
-      ..x = 150
-      ..y = 50;
-    SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-      amount: 6,
-      stepTime: 0.1,
-      textureSize: boyJumpVSize,
-    );
-    boyJumpAnimation =
-        SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = 150
-          ..y = 350
-          ..size = spriteSize
-          ..position = boyAnimation.position
-          ..removeOnFinish = true;
-    boyAnimation.removeFromParent();
-    if (boyAnimation.isPrepared) {
-      await add(boyJumpAnimation);
+  _onLeftArrowPressed() {
+    if (direction != 'left') {
+      flipCharacter();
     }
-    // add(boyAnimation);
   }
+
+  _onRightArrowPressed() {
+    if (direction != 'right') {
+      flipCharacter();
+    }
+  }
+
+  // _onJumpButtonPressed() async {
+  //   // var spriteSheet = await images.load(AssetConstants.boyJump);
+  //   // SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
+  //   //   amount: 6,
+  //   //   stepTime: 0.1,
+  //   //   textureSize: boyJumpVSize,
+  //   // );
+  //   // boyAnimation =
+  //   // SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+  //   //   ..x = 250
+  //   //   ..y = 350
+  //   //   ..size = spriteSize;
+  //   // boyAnimation
+  //   var spriteSheet = await images.load(AssetConstants.boyJump);
+  //   boy
+  //     ..sprite = await loadSprite(AssetConstants.boyJump)
+  //     ..size = boyJumpVSize
+  //     ..x = 150
+  //     ..y = 50;
+  //   SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
+  //     amount: 6,
+  //     stepTime: 0.1,
+  //     textureSize: boyJumpVSize,
+  //   );
+  //   boyJumpAnimation =
+  //       SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
+  //         ..x = 150
+  //         ..y = 350
+  //         ..size = spriteSize
+  //         ..position = boyAnimation.position
+  //         ..removeOnFinish = true;
+  //   boyAnimation.removeFromParent();
+  //   if (boyAnimation.isLoaded) {
+  //     await add(boyJumpAnimation);
+  //   }
+  //   // add(boyAnimation);
+  // }
 
   @override
   Future<void> onLoad() async {
@@ -140,23 +140,23 @@ class MyGame extends FlameGame with HasGameRef, HasTappables {
           ..position = Vector2(boyStartPositionX, _yAxisHeight);
     add(boyAnimation);
     //arrows
-    // Button leftArrow = Button(onPressed: _onLeftArrowPressed)
-    //   ..sprite = await loadSprite(AssetConstants.leftArrow)
-    //   ..size = arrowSize
-    //   ..position = leftArrowPosition;
-    // add(leftArrow);
-    //
-    // Button rightArrow = Button(onPressed: _onRightArrowPressed)
-    //   ..sprite = await loadSprite(AssetConstants.rightArrow)
-    //   ..size = arrowSize
-    //   ..position = rightArrowPosition;
-    // add(rightArrow);
+    Button leftArrow = Button(onPressed: _onLeftArrowPressed)
+      ..sprite = await loadSprite(AssetConstants.leftArrow)
+      ..size = arrowSize
+      ..position = leftArrowPosition;
+    add(leftArrow);
 
-    Button jumpArrow = Button(onPressed: _onJumpButtonPressed)
-      ..sprite = await loadSprite(AssetConstants.buttonJump)
-      ..size = buttonSize
-      ..position = jumpButtonPosition;
-    add(jumpArrow);
+    Button rightArrow = Button(onPressed: _onRightArrowPressed)
+      ..sprite = await loadSprite(AssetConstants.rightArrow)
+      ..size = arrowSize
+      ..position = rightArrowPosition;
+    add(rightArrow);
+
+    // Button jumpArrow = Button(onPressed: _onJumpButtonPressed)
+    //   ..sprite = await loadSprite(AssetConstants.buttonJump)
+    //   ..size = buttonSize
+    //   ..position = jumpButtonPosition;
+    // add(jumpArrow);
   }
 
   void onDoubleTap() {
@@ -200,7 +200,7 @@ class MyGame extends FlameGame with HasGameRef, HasTappables {
     // boyAnimation.position = Vector2(700, 200.0);
   }
 Future<void> _updateJumpAxisY() async{
-  if(boyJumpAnimation.isPrepared){
+  if(boyJumpAnimation.isLoaded){
     print('boyJumpAnimation.position.y ${boyJumpAnimation.position.y}');
     // -- upward
     // ++ downward
@@ -216,14 +216,14 @@ Future<void> _updateJumpAxisY() async{
     required SpriteAnimationComponent character,
     required double speed,
   }) {
-    // switch (direction) {
-    //   case 'right':
-    //     character.x += speed;
-    //     break;
-    //   case 'left':
-    //     character.x -= speed;
-    //     break;
-    // }
+    switch (direction) {
+      case 'right':
+        character.x += speed;
+        break;
+      case 'left':
+        character.x -= speed;
+        break;
+    }
 
     if (character.x > 800 || boyJumpAnimation.x > 800) {
       if (direction == 'right') {
